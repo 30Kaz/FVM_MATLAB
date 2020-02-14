@@ -1,0 +1,29 @@
+function diffusionterm=AddMomRHS_Diffusion(Mesh,Field,Fluid)
+    %{
+    - muf*nabra*vf*Tf+muf*nabra*vf^T*Sf eq(15.71)
+    - Be careful about face vector direction!
+    - ***For some reason, even boundary face's contribution is calculated,
+      which I still don't understand why......
+      >Code runs without it, and I believe it's unnecessary.
+    %}
+    
+    diffusionterm=zeros(Mesh.element.number,Mesh.Dimension);
+    facevelocigradtranspose=[Field.face.velocitygrad(:,1),Field.face.velocitygrad(:,4),Field.face.velocitygrad(:,7)...
+                             Field.face.velocitygrad(:,2),Field.face.velocitygrad(:,5),Field.face.velocitygrad(:,8)...
+                             Field.face.velocitygrad(:,3),Field.face.velocitygrad(:,6),Field.face.velocitygrad(:,9)];
+    
+    %interior faces
+    for i=Mesh.face.boundarynum+1:Mesh.face.number
+        for k=1:Mesh.Dimension
+        diffusionterm(Mesh.face.owner(i,1),k)...
+       =diffusionterm(Mesh.face.owner(i,1),k)...
+       +Fluid.viscosity*dot(Field.face.velocitygrad(i,3*k-2:3*k),Mesh.face.Tf(i,:))...
+       +Fluid.viscosity*dot(facevelocigradtranspose(i,3*k-2:3*k),Mesh.face.Sf(i,:));
+        
+        diffusionterm(Mesh.face.owner(i,2),k)...
+       =diffusionterm(Mesh.face.owner(i,2),k)...
+       -Fluid.viscosity*dot(Field.face.velocitygrad(i,3*k-2:3*k),Mesh.face.Tf(i,:))...
+       -Fluid.viscosity*dot(facevelocigradtranspose(i,3*k-2:3*k),Mesh.face.Sf(i,:));
+        end        
+    end
+end
