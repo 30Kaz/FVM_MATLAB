@@ -3,4 +3,6 @@ function SetFluid()
     Domain.Fluid.density=1000;
     Domain.Fluid.viscosity=1;
     
+    Domain.Fluid.scalar1diff=0.0;   % diffusion coefficient of scalar1
+    
 end

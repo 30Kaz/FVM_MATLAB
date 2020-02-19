@@ -43,7 +43,7 @@ while(1)
     
     if Domain.Solutionsystem.solutiontime>=Domain.Solutionsystem.max_solutiontime
         disp('********** Maximum time reached **********');
-        fprintf('Elapsed time : %d min %2g sec\n', floor(toc/60), rem(toc,60));
         break
     end
 end
+fprintf('Elapsed time : %d min %2g sec\n', floor(toc/60), rem(toc,60));

@@ -14,4 +14,14 @@ function preallocate()
                                 'velocity',zeros(Domain.Mesh.face.number,3),...
                                 'velocitygrad',zeros(Domain.Mesh.face.number,9));
     Domain.Tmp          =struct('res_veloc',0,'res_p',0);
+    
+    
+    if Domain.Solutionsystem.scalarmode==1
+        Domain.Field.element.scalar1=zeros(Domain.Mesh.element.number,1);
+        Domain.Field.element.lastscalar1=zeros(Domain.Mesh.element.number,1);
+        Domain.Field.element.scalar1grad=zeros(Domain.Mesh.element.number,3);
+        Domain.Field.face.scalar1=zeros(Domain.Mesh.face.number,1);
+        Domain.Field.face.scalar1grad=zeros(Domain.Mesh.face.number,3);
+    end
+    
 end

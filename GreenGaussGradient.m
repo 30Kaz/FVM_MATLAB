@@ -47,5 +47,20 @@ function elemgrad=GreenGaussGradient(Mesh,Field,Type)
                                                 /Mesh.element.volume(Mesh.face.owner(i,1));
                 end
             end
+            
+        case 'scalar1'
+            elemgrad=zeros(Mesh.element.number,3);
+            for i=1:Mesh.face.number
+                %face owner 1's contribution
+                elemgrad(Mesh.face.owner(i,1),:)=elemgrad(Mesh.face.owner(i,1),:)...
+                                                +Field.face.scalar1(i)*Mesh.face.Sf(i,:)...
+                                                /Mesh.element.volume(Mesh.face.owner(i,1));
+                %face owner 2's contribution, excluding boundary
+                if Mesh.face.owner(i,2)~=0
+                elemgrad(Mesh.face.owner(i,2),:)=elemgrad(Mesh.face.owner(i,2),:)...
+                                                -Field.face.scalar1(i)*Mesh.face.Sf(i,:)...
+                                                /Mesh.element.volume(Mesh.face.owner(i,1));
+                end
+            end
     end
 end

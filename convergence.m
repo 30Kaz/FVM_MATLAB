@@ -22,7 +22,7 @@ function convergence()
           '     v = ', num2str(res_veloc(iterationnumber, 2))...
           '     continuity = ', num2str(res_p(iterationnumber))]);
     
-    figure(4),clf(4)    %clf necessary for correctly-coloured legend
+    figure(1),clf(1)    %clf necessary for correctly-coloured legend
     semilogy(res_veloc(:,1),'color','y','LineWidth',2);   %res_u
     hold on;
     semilogy(res_veloc(:,2),'color','m','LineWidth',2);   %res_v

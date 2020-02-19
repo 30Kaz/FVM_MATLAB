@@ -23,6 +23,11 @@ function get_grad(Type)
 %             dlmwrite('face.PCorrect.txt',Domain.Field.face.PCorrect);
 %             dlmwrite('element.PCorrectgrad.txt',Domain.Field.element.PCorrectgrad);
 %             dlmwrite('face.PCorrectgrad.txt',Domain.Field.face.PCorrectgrad);
+        case 'scalar1'
+            Domain.Field.face.scalar1=InterpolateValue(Domain.Mesh,Domain.Field,'scalar1');
+            Domain.Field.element.scalar1grad=GreenGaussGradient(Domain.Mesh,Domain.Field,'scalar1');
+            Domain.Field.face.scalar1grad=InterpolateGrad(Domain.Mesh,Domain.Field,'scalar1');
+            
         otherwise
             disp('Incorrect Type in get_grad!!');
     end
