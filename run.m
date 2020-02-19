@@ -4,14 +4,13 @@
 clear, clc, close all;
 global Domain;
 
-Domain.Mesh=GmshFileRead('Cavity_2500.msh',2);
+Domain.Mesh=GmshFileRead('Cavity_400.msh',2);
 
 SetSolver();
 SetFluid();
 preallocate();
 SetBoundary();
 SetInitialBoundaryscalar1();
-% Plotmesh(Domain.Mesh);
 figure(1),clf;
 Plotresults(Domain.Mesh, Domain.Field,Domain.Solutionsystem);
 tic

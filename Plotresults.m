@@ -58,6 +58,7 @@ patch(x,y,Field.element.pressure)
 colorbar
 colormap(jet)
 title(join(['Pressure, Time = ' num2str(Solutionsystem.solutiontime) '[s]']));
+caxis([-1200 1500]);
 
 view(2)
 axis equal
@@ -67,21 +68,22 @@ axis(ax*1.001);
 saveas(gcf,join([pwd '/output/Pressure_' num2str(Solutionsystem.timelevel) '.png']))
 
 %Scalar1
-figure(5)
-%figure(n+2)
-clf
-patch(x,y,Field.element.scalar1)
-colorbar
-colormap(jet)
-title(join(['scalar1, Time = ' num2str(Solutionsystem.solutiontime) '[s]']));
-caxis([0 1]);
-view(2)
-axis equal
-axis off
-ax=axis;
-axis(ax*1.001);
-saveas(gcf,join([pwd '/output/scalar1_' num2str(Solutionsystem.timelevel) '.png']))
-
+if Solutionsystem.scalarmode==1
+    figure(5)
+    %figure(n+2)
+    clf
+    patch(x,y,Field.element.scalar1)
+    colorbar
+    colormap(jet)
+    title(join(['scalar1, Time = ' num2str(Solutionsystem.solutiontime) '[s]']));
+    caxis([0 1]);
+    view(2)
+    axis equal
+    axis off
+    ax=axis;
+    axis(ax*1.001);
+    saveas(gcf,join([pwd '/output/scalar1_' num2str(Solutionsystem.timelevel) '.png']))
+end
 %else
     
 

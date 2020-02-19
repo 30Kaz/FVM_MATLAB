@@ -32,6 +32,10 @@ function elemgrad=GreenGaussGradient(Mesh,Field,Type)
                     end
                 end
             end
+            %transposing test
+%             elemgrad=[elemgrad(:,1),elemgrad(:,4),elemgrad(:,7)...
+%                       elemgrad(:,2),elemgrad(:,5),elemgrad(:,8)...
+%                       elemgrad(:,3),elemgrad(:,6),elemgrad(:,9)];
             
         case 'pressure correction'
             elemgrad=zeros(Mesh.element.number,3);
