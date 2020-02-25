@@ -26,6 +26,11 @@ function solve_momentum()
 %     dlmwrite('MomRHSAddedPressure.txt',MomRHS);
     MomRHS=MomRHS+AddMomRHS_Diffusion(Mesh,Field,Fluid);
 %     dlmwrite(join([pwd '/output/MomRHSAddedDiffusion.txt']),MomRHS);
+
+%     writematrix(MomRHS,join([pwd '/output/MomRHSBeforeHO_iter' num2str(Solutionsystem.iterationnumber) '.csv']));
+    MomRHS=MomRHS+AddMomRHS_HigherOrder(Mesh,Field);
+%     writematrix(MomRHS,join([pwd '/output/MomRHSAddedHO_iter' num2str(Solutionsystem.iterationnumber) '.csv']));
+    
     MomRHS=MomRHS+AddMomRHS_Boundary(Mesh,Field,Fluid);
 %     dlmwrite(join([pwd '/output/MomRHSAddedBoundary.txt']),MomRHS);
     [MomMat,MomRHS]=RelaxMom(MomMat,MomRHS,Mesh,Field,Solutionsystem);

@@ -28,8 +28,8 @@ hold on
 h1=quiver(Mesh.element.centroid(:,1),Mesh.element.centroid(:,2),Field.element.velocity(:,1),Field.element.velocity(:,2));
 set(h1,'AutoScale','on', 'AutoScaleFactor', 2)
 title(join(['Velocity, Time = ' num2str(Solutionsystem.solutiontime) '[s]']));
-
-saveas(gcf,join([pwd '/output/VelocField_' num2str(Solutionsystem.timelevel) '.png']))
+filename=join([pwd '/output/VelocField_' num2str(Solutionsystem.timelevel) '.png']);
+saveas(gcf,filename);
 
 n = length(findobj('type','figure'));
 
@@ -48,7 +48,9 @@ axis equal
 axis off
 ax=axis;
 axis(ax*1.001);
-saveas(gcf,join([pwd '/output/VelocityContour_' num2str(Solutionsystem.timelevel) '.png']))
+% saveas(gcf,join([pwd '/output/VelocityContour_' num2str(Solutionsystem.timelevel) '.png']))
+filename=join([pwd '/output/VelocContour_' num2str(Solutionsystem.timelevel) '.png']);
+saveas(gcf,filename);
 
 %Pressure
 figure(4)
@@ -65,7 +67,9 @@ axis equal
 axis off
 ax=axis;
 axis(ax*1.001);
-saveas(gcf,join([pwd '/output/Pressure_' num2str(Solutionsystem.timelevel) '.png']))
+% saveas(gcf,join([pwd '/output/Pressure_' num2str(Solutionsystem.timelevel) '.png']))
+filename=join([pwd '/output/Pressure_' num2str(Solutionsystem.timelevel) '.png']);
+saveas(gcf,filename);
 
 %Scalar1
 if Solutionsystem.scalarmode==1
@@ -82,7 +86,9 @@ if Solutionsystem.scalarmode==1
     axis off
     ax=axis;
     axis(ax*1.001);
-    saveas(gcf,join([pwd '/output/scalar1_' num2str(Solutionsystem.timelevel) '.png']))
+%     saveas(gcf,join([pwd '/output/scalar1_' num2str(Solutionsystem.timelevel) '.png']));
+    filename=join([pwd '/output/scalar1_' num2str(Solutionsystem.timelevel) '.png']);
+    saveas(gcf,filename);
 end
 %else
     

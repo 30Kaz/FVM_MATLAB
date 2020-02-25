@@ -16,30 +16,41 @@ function SetBoundary()
 %                        [1,0,0],[1,1,0],'No slip wall',[0,0,0];
 %                        [0,1,0],[1,1,0],'No slip wall',[1,0,0];
 %                        [0,0,0],[0,1,0],'No slip wall',[0,0,0];};
-    %left to bottom
+%     %left to bottom
 %    Boundarycondition={[0,0,0],[1,0,0],'Specific pressure',[0,0,0];
 %                        [1,0,0],[1,1,0],'No slip wall',[0,0,0];
 %                        [0,1,0],[1,1,0],'No slip wall',[0,0,0];
 %                        [0,0,0],[0,1,0],'Specific velocity',[1.0,0,0];};
-     %left to right and top
+%      %left to right and top
 %    Boundarycondition={[0,0,0],[1,0,0],'No slip wall',[0,0,0];
 %                        [1,0,0],[1,1,0],'Specific velocity',[0.5,0,0];
 %                        [0,1,0],[1,1,0],'Specific velocity',[0,0.5,0];
 %                        [0,0,0],[0,1,0],'Specific velocity',[1,0,0];};
-    %left to right
-    Boundarycondition={[0,0,0],[1,0,0],'No slip wall',[0,0,0];
-                       [1,0,0],[1,1,0],'Specific pressure',[0,0,0];
-                       [0,1,0],[1,1,0],'No slip wall',[0,0,0];
-                       [0,0,0],[0,1,0],'Specific velocity',[1,0,0];};
+%     %left to right
+%     Boundarycondition={[0,0,0],[1,0,0],'No slip wall',[0,0,0];
+%                        [1,0,0],[1,1,0],'Specific pressure',[0,0,0];
+%                        [0,1,0],[1,1,0],'No slip wall',[0,0,0];
+%                        [0,0,0],[0,1,0],'Specific velocity',[1,0,0];};
 %    Boundarycondition={[0,0,0],[1,0,0],'Specific velocity',[0,-1,0];
 %                        [1,0,0],[1,1,0],'No slip wall',[0,0,0];
 %                        [0,1,0],[1,1,0],'No slip wall',[0,0,0];
 %                        [0,0,0],[0,1,0],'Specific velocity',[1,0,0];};
+%     %left to right
 %    Boundarycondition={[0,0,0],[1,0,0],'No slip wall',[0,0,0];
 %                        [1,0,0],[1,1,0],'Specific velocity',[1,0,0];
 %                        [0,1,0],[1,1,0],'No slip wall',[0,0,0];
 %                        [0,0,0],[0,1,0],'Specific velocity',[1,0,0];};
-
+%     %no flow
+%     Boundarycondition={[0,0,0],[1,0,0],'No slip wall',[0,0,0];
+%                        [1,0,0],[1,1,0],'No slip wall',[0,0,0];
+%                        [0,1,0],[1,1,0],'No slip wall',[0,0,0];
+%                        [0,0,0],[0,1,0],'No slip wall',[0,0,0];};
+    %uniformly(u,v)=(1,1) for testing scalar1 eqqqqq
+    Boundarycondition={[0,0,0],[1,0,0],'Specific velocity',[1,1,0];
+                       [1,0,0],[1,1,0],'Specific velocity',[1,1,0];
+                       [0,1,0],[1,1,0],'Specific velocity',[1,1,0];
+                       [0,0,0],[0,1,0],'Specific velocity',[1,1,0];};
+    
     Boundaryapply2D(Domain.Mesh,Boundarycondition);
     BCtoFieldFace(Domain.Mesh,Domain.Fluid);
 end

@@ -1,7 +1,6 @@
 function Mesh = GmshFileRead( Filename, Dimension)
     %{
-      - DC added at the end
-        >looks unnecessary
+      - dCf added near the bottom
     %}
   t1=clock;
 
@@ -273,14 +272,25 @@ function Mesh = GmshFileRead( Filename, Dimension)
   Mesh.face.gcf=zeros(Mesh.face.number,2);%ratio for the two elements
   vector_CF=zeros(Mesh.face.number,3);
   
-  vector_CF(1:boundarynum    ,:)=Mesh.face.centroid(1:boundarynum    ,:)-Mesh.element.centroid(Mesh.face.owner(1:boundarynum    ,1),:);  
-  vector_CF(boundarynum+1:end,:)=(Mesh.element.centroid(Mesh.face.owner(boundarynum+1:Mesh.face.number,2),:)-Mesh.element.centroid(Mesh.face.owner(boundarynum+1:Mesh.face.number,1),:));
-  vector_Cf=(Mesh.face.centroid(boundarynum+1:Mesh.face.number,:)-Mesh.element.centroid(Mesh.face.owner(boundarynum+1:Mesh.face.number,1),:));
-  vector_fF=(Mesh.element.centroid(Mesh.face.owner(boundarynum+1:Mesh.face.number,2),:)-Mesh.face.centroid(boundarynum+1:Mesh.face.number,:));
+  vector_CF(1:boundarynum    ,:)=Mesh.face.centroid(1:boundarynum,:)...
+                                -Mesh.element.centroid(Mesh.face.owner(1:boundarynum,1),:);  
+  vector_CF(boundarynum+1:end,:)=(Mesh.element.centroid(Mesh.face.owner(boundarynum+1:Mesh.face.number,2),:)...
+                                 -Mesh.element.centroid(Mesh.face.owner(boundarynum+1:Mesh.face.number,1),:));
+  vector_Cf=(Mesh.face.centroid(boundarynum+1:Mesh.face.number,:)...
+            -Mesh.element.centroid(Mesh.face.owner(boundarynum+1:Mesh.face.number,1),:));
+  vector_fF=(Mesh.element.centroid(Mesh.face.owner(boundarynum+1:Mesh.face.number,2),:)...
+            -Mesh.face.centroid(boundarynum+1:Mesh.face.number,:));
   Mesh.face.dCF(:,1)=sqrt(vector_CF(:,1).^2+vector_CF(:,2).^2);
   Mesh.face.gcf(boundarynum+1:end,:)=[sqrt(vector_fF(:,1).^2+vector_fF(:,2).^2)./(sqrt(vector_Cf(:,1).^2+vector_Cf(:,2).^2)+sqrt(vector_fF(:,1).^2+vector_fF(:,2).^2)),...
-                                                   sqrt(vector_Cf(:,1).^2+vector_Cf(:,2).^2)./(sqrt(vector_Cf(:,1).^2+vector_Cf(:,2).^2)+sqrt(vector_fF(:,1).^2+vector_fF(:,2).^2))];
+                                      sqrt(vector_Cf(:,1).^2+vector_Cf(:,2).^2)./(sqrt(vector_Cf(:,1).^2+vector_Cf(:,2).^2)+sqrt(vector_fF(:,1).^2+vector_fF(:,2).^2))];
   Mesh.face.ecf=vector_CF./repmat(Mesh.face.dCF,[1,3]);
+  
+  %Added by Kazuya 
+  Mesh.face.dCf=zeros(Mesh.face.number,2);
+  Mesh.face.dCf(1:boundarynum,1)=sqrt(sum(vector_CF(1:boundarynum,:).^2,2));
+  Mesh.face.dCf(boundarynum+1:Mesh.face.number,1)=sqrt(sum(vector_Cf.^2,2));
+  Mesh.face.dCf(boundarynum+1:Mesh.face.number,2)=sqrt(sum(vector_fF.^2,2));
+  
   %correct the Sf direction for face
   Mesh.face.Sf=Mesh.face.Sf.*repmat(sign(sum(Mesh.face.Sf.*Mesh.face.ecf,2)),[1,3]);
   
@@ -295,9 +305,6 @@ function Mesh = GmshFileRead( Filename, Dimension)
 %   % Over-relaxed Approach
 %   Mesh.face.Ef=sum(Mesh.face.Sf.*Mesh.face.Sf,2)./sum(Mesh.face.Sf.*Mesh.face.ecf,2);
 %   Mesh.face.Tf=Mesh.face.Sf-repmat(Mesh.face.Ef,[1,3]).*Mesh.face.ecf;
-  
-%   Mesh.element.DC=zeros(Mesh.element.number,3);
-  %^Added by KAZUYA. Should ideally be Dc, not Df
   
   t6=clock;
   fprintf('\n');

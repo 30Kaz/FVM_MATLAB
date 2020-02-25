@@ -12,7 +12,8 @@ function SetInitialBoundaryscalar1()
         end
     end
     
-    %Boundary Condition   
-        Domain.Field.face.scalar1(151:175)=1; %only the boundary on the left (0,0)-(0,1)
-%         Domain.Field.face.scalar1(31:40)=1;
+    %Boundary Condition, argument dependent on Mesh
+%         Domain.Field.face.scalar1(151:175)=1; %only the boundary on the left (0,0)-(0,1)
+        Domain.Field.face.scalar1(61:80)=1;   %for mesh 400
+%     Domain.Field.face.scalar1(151:200)=1;   %for mesh 2500
 end

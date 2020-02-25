@@ -21,13 +21,13 @@ function solve_scalar()
 
         ScalarRHS=ScalarRHS+AddScalarRHS_Transient(Mesh,Field,Solutionsystem,Fluid);
         
-        writematrix(ScalarRHS,join(['output/' 'ScalarRHS_beforeHO.csv']));
-%         writematrix(ScalarRHS,join(['output/' 'ScalarRHS_beforeHO.txt']));
-%         dlmwrite('output/ScalarRHS_beforeHO.txt', ScalarRHS);
+%         writematrix(ScalarRHS,join(['output/' 'ScalarRHS_beforeHO.csv']));
+        writematrix(ScalarRHS,join(['output/' 'ScalarRHS_beforeHO.txt']));
+%         dlmwrite(join(['output/' 'ScalarRHS_beforeHO.txt']), ScalarRHS);
         ScalarRHS=ScalarRHS+ScalarRHS_HigherOrder(Mesh,Field);
-        writematrix(ScalarRHS,join(['output/' 'ScalarRHS_afterHO.csv']));
-%        0 dlmwrite('output/ScalarRHS_afterHO.txt', ScalarRHS);
-%         writematrix(ScalarRHS,join(['output/' 'ScalarRHS_afterHO.txt']));
+%         writematrix(ScalarRHS,join(['output/' 'ScalarRHS_afterHO.csv']));
+%         dlmwrite(join(['output/' 'ScalarRHS_afterHO.txt']), ScalarRHS);
+writematrix(ScalarRHS,join(['output/' 'ScalarRHS_beforeHO.txt']));
         ScalarRHS=ScalarRHS+AddScalarRHS_Boundary(Mesh,Field,Fluid);
 
         Domain.Field.element.scalar1=sparse(ScalarMat)\ScalarRHS;

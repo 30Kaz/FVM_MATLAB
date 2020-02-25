@@ -17,14 +17,11 @@ function solve_pressure()
     PCorrectRHS=PCorrectRHS+AddPCorrectRHS_Flux(Mesh,Field);
     PCorrectRHS=PCorrectRHS+AddPCorrectRHS_Boundary(Mesh,Field);
     
-    %ONLY WHEN there's no pressure Boundary Condition!!
     if min(Mesh.face.boundarycondition(1:Mesh.face.boundarynum,1))==1   %Pressure outlet exists
         PCorrect=sparse(PCorrectMat)\PCorrectRHS;
     else                                                                %No pressure outlet
         PCorrect(2:Mesh.element.number,1)=sparse(PCorrectMat(2:Mesh.element.number,(2:Mesh.element.number)))\PCorrectRHS(2:Mesh.element.number,1);
     end
-%     PCorrect=sparse(PCorrectMat)\PCorrectRHS;
-%     PCorrect(2:Mesh.element.number,1)=sparse(PCorrectMat(2:Mesh.element.number,(2:Mesh.element.number)))\PCorrectRHS(2:Mesh.element.number,1);
 %     dlmwrite('PCorrectMat.txt',PCorrectMat);
 %     dlmwrite('PCorrectRHS.txt',PCorrectRHS);
 %     dlmwrite('PCorrect.txt',PCorrect);

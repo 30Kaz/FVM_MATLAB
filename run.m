@@ -10,6 +10,7 @@ SetSolver();
 SetFluid();
 preallocate();
 SetBoundary();
+SetInitial();
 SetInitialBoundaryscalar1();
 figure(1),clf;
 Plotresults(Domain.Mesh, Domain.Field,Domain.Solutionsystem);
